@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import { genrateToken } from "../lib/utils.js";
 export const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
 
@@ -35,10 +36,13 @@ export const signup = async (req, res) => {
       pasword: hashedPassword,
     });
 
+    // here send a welcome mail to new user
+
     // authentication of new user
     if (newUser) {
-      genrateToken(newUser._id, res);
-      await newUser.save();
+      // first save then genrate token
+      const savedUser = await newUser.save();
+      genrateToken(savedUser._id, res);
 
       res.status(201).json({
         _id: newUser._id,
@@ -49,5 +53,8 @@ export const signup = async (req, res) => {
     } else {
       res.status(400).json({ message: "Invalid user data" });
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log("Error in signup controller", error);
+    res.status(500).json({ messaage: "Internal server error" });
+  }
 };
