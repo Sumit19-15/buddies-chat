@@ -1,5 +1,8 @@
 import User from "../models/User.js";
 import { genrateToken } from "../lib/utils.js";
+import { sendWelcomeEmail } from "../emails/emailHandlers.js";
+import "dotenv/config";
+
 export const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
 
@@ -36,8 +39,6 @@ export const signup = async (req, res) => {
       pasword: hashedPassword,
     });
 
-    // here send a welcome mail to new user
-
     // authentication of new user
     if (newUser) {
       // first save then genrate token
@@ -50,6 +51,17 @@ export const signup = async (req, res) => {
         email: newUser.email,
         profilePic: newUser.profilePic,
       });
+
+      // sending welcome email to new user
+      try {
+        await sendWelcomeEmail(
+          savedUser.email,
+          savedUser.fullName,
+          process.env.CLIENT_URL,
+        );
+      } catch (error) {
+        console.log("Failed to send Welcome email", error);
+      }
     } else {
       res.status(400).json({ message: "Invalid user data" });
     }
