@@ -21,10 +21,11 @@ export const protectRoute = async (req, res, next) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    req.user = user;
+    req.user = user; // as soon as login the user now store in req.body itself
     next();
   } catch (error) {
     console.log("Error in protectRoute middleware", error);
     return res.status(500).json({ message: "Internal server error" });
+    next();
   }
 };
