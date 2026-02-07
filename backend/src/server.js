@@ -7,6 +7,7 @@ import messageRoutes from "./routes/message.route.js";
 import path from "path";
 import connectDB from "./lib/db.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 dotenv.config();
 const app = express();
@@ -15,6 +16,7 @@ const __dirname = path.resolve(); // for production variable declare
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json()); // req.body
+app.use(cors({ origin: ENV.CLIENT_URL, credentials: true })); // for frontend requested
 app.use(cookieParser());
 
 // declaring that go on Routes for this route
