@@ -1,2 +1,22 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+@theme {
+  --animate-border: border 4s linear infinite;
+}
+
+@keyframes border {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+@utility animate-border {
+  animation: var(--animate-border);
+}
+
+@property --border-angle {
+  inherits: false;
+  initial-value: 0deg;
+  syntax: "<angle>";
+}
