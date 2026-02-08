@@ -91,7 +91,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid Credentials" });
     }
 
-    console.log(user._id);
+    console.log("User login with id :",user._id);
     genrateToken(user._id, res);
 
     res.status(200).json({

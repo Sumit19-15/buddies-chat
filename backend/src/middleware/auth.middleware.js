@@ -4,28 +4,23 @@ import { ENV } from "../lib/env.js";
 
 export const protectRoute = async (req, res, next) => {
   try {
-    const token = req.cookie.jwt;
-    if (!token) {
+    const token = req.cookies.jwt;
+    if (!token)
       return res
         .status(401)
         .json({ message: "Unauthorized - No token provided" });
-    }
 
     const decoded = jwt.verify(token, ENV.JWT_SECRET);
-    if (!decoded) {
+    if (!decoded)
       return res.status(401).json({ message: "Unauthorized - Invalid token" });
-    }
 
     const user = await User.findById(decoded.userId).select("-password");
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    if (!user) return res.status(404).json({ message: "User not found" });
 
-    req.user = user; // as soon as login the user now store in req.body itself
+    req.user = user;
     next();
   } catch (error) {
-    console.log("Error in protectRoute middleware", error);
-    return res.status(500).json({ message: "Internal server error" });
-    next();
+    console.log("Error in protectRoute middleware:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
