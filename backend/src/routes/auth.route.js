@@ -12,6 +12,7 @@ import { arcjetProtection } from "../middleware/arcjet.middleware.js";
 const router = express.Router();
 
 // router.use(arcjetProtection); // now at all route fun execute
+// arcjet used for limiting req bot and other things
 
 router.post("/signup", signup);
 

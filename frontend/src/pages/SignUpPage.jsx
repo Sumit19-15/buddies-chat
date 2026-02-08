@@ -44,7 +44,12 @@ function SignUpPage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* FULL NAME */}
                   <div>
-                    <label className="auth-input-label">Full Name</label>
+                    <label
+                      className="auth-input-label"
+                      htmlFor="signupFullname"
+                    >
+                      Full Name
+                    </label>
                     <div className="relative">
                       <UserIcon className="auth-input-icon" />
 
@@ -55,14 +60,17 @@ function SignUpPage() {
                           setFormData({ ...formData, fullName: e.target.value })
                         }
                         className="input"
-                        placeholder="John Doe"
+                        placeholder="Enter Full name"
+                        id="signupFullname"
                       />
                     </div>
                   </div>
 
                   {/* EMAIL INPUT */}
                   <div>
-                    <label className="auth-input-label">Email</label>
+                    <label className="auth-input-label" htmlFor="signupEmial">
+                      Email
+                    </label>
                     <div className="relative">
                       <MailIcon className="auth-input-icon" />
 
@@ -73,17 +81,22 @@ function SignUpPage() {
                           setFormData({ ...formData, email: e.target.value })
                         }
                         className="input"
-                        placeholder="johndoe@gmail.com"
+                        placeholder="abc@mail.com"
+                        id="signupEmial"
                       />
                     </div>
                   </div>
 
                   {/* PASSWORD INPUT */}
                   <div>
-                    <label className="auth-input-label">Password</label>
+                    <label
+                      className="auth-input-label"
+                      htmlFor="signupPassword"
+                    >
+                      Password
+                    </label>
                     <div className="relative">
                       <LockIcon className="auth-input-icon" />
-
                       <input
                         type="password"
                         value={formData.password}
@@ -92,6 +105,7 @@ function SignUpPage() {
                         }
                         className="input"
                         placeholder="Enter your password"
+                        id="signupPassword"
                       />
                     </div>
                   </div>
