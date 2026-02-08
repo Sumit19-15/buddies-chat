@@ -4,6 +4,7 @@ import { sendWelcomeEmail } from "../emails/emailHandlers.js";
 import "dotenv/config";
 import { ENV } from "../lib/env.js";
 import cloudinary from "../lib/cloudinary.js";
+import bcrypt from "bcryptjs";
 
 export const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
@@ -36,9 +37,9 @@ export const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
-      email,
       fullName,
-      pasword: hashedPassword,
+      email,
+      password: hashedPassword,
     });
 
     // authentication of new user
@@ -69,14 +70,14 @@ export const signup = async (req, res) => {
     }
   } catch (error) {
     console.log("Error in signup controller", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error in SignUp" });
   }
 };
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(400).json({ message: "Email ans Password is requuried" });
+    return res.status(400).json({ message: "Email and Password is requuried" });
   }
 
   try {
@@ -90,6 +91,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid Credentials" });
     }
 
+    console.log(user._id);
     genrateToken(user._id, res);
 
     res.status(200).json({
@@ -100,7 +102,7 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in login controller", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error in login" });
   }
 };
 

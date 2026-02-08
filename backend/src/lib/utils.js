@@ -5,7 +5,7 @@ export const genrateToken = (userId, res) => {
     throw new Error("Jwt_Secret is not exist or config");
   }
 
-  const token = jwt.sign({ userid }, JWT_SECRET, {
+  const token = jwt.sign({ userId }, JWT_SECRET, {
     expiresIn: "7d",
   });
 
