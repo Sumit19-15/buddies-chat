@@ -11,7 +11,8 @@ export const getAllContacts = async (req, res) => {
 
     res.status(200).json(filteredUsers);
   } catch (error) {
-    console.log("Error in getAllContacts", error);
+    console.log(req.user);
+    console.log("Error in getAllContacts controller", error);
     res.status(500).json({ message: "Server Error" });
   }
 };

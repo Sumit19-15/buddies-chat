@@ -16,13 +16,13 @@ const __dirname = path.resolve(); // for production variable declare
 
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json()); // req.body
+app.use(express.json({ limit: "5mb" })); //for req.body and limit for frontend req
 app.use(cors({ origin: ENV.CLIENT_URL, credentials: true })); // for frontend requested
 app.use(cookieParser());
 
 // declaring that go on Routes for this route
 app.use("/api/auth", authRoutes);
-app.use("/api/message", messageRoutes);
+app.use("/api/messages", messageRoutes);
 
 // make ready for deployment
 if (process.env.NODE_ENV === "production") {
