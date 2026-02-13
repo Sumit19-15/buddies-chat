@@ -2,6 +2,7 @@ import cloudinary from "../lib/cloudinary.js";
 import Message from "../models/Message.js";
 import User from "../models/User.js";
 
+// /messages/contacts
 export const getAllContacts = async (req, res) => {
   try {
     const loggedInUserId = req.user._id;
@@ -17,6 +18,7 @@ export const getAllContacts = async (req, res) => {
   }
 };
 
+// /messages/id
 export const getMessagesByUserId = async (req, res) => {
   try {
     const myId = req.user._id;
@@ -37,6 +39,7 @@ export const getMessagesByUserId = async (req, res) => {
   }
 };
 
+// /messaages/send/id
 export const sendMessage = async (req, res) => {
   try {
     const { text, image } = req.body;
@@ -73,6 +76,7 @@ export const sendMessage = async (req, res) => {
 
     await newMessage.save();
 
+    // notification regarding online and new msg
     const receiverSocketId = getReceiverSocketId(receiverId);
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);
@@ -85,6 +89,7 @@ export const sendMessage = async (req, res) => {
   }
 };
 
+// /message/chats
 export const getChatPartners = async (req, res) => {
   try {
     const loggedInUserId = req.body._id;
@@ -105,7 +110,7 @@ export const getChatPartners = async (req, res) => {
     ];
 
     const chatPartners = await User.find({
-      _id: { $in: chatPartnerIds },
+      _id: { $in: chatPartnersIds },
     }).select("-password");
 
     res.status(200).json(chatPartners);
