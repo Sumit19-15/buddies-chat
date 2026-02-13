@@ -77,7 +77,7 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(400).json({ message: "Email and Password is requuried" });
+    return res.status(400).json({ message: "Email and Password is requried" });
   }
 
   try {
@@ -91,7 +91,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid Credentials" });
     }
 
-    console.log("User login with id :",user._id);
+    console.log("User login with id :", user._id);
     genrateToken(user._id, res);
 
     res.status(200).json({

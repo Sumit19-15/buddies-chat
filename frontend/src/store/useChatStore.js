@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
-import { UserRoundIcon } from "lucide-react";
+import { useAuthStore } from "./useAuthStore.js";
 
 export const useChatStore = create((set, get) => ({
   allContacts: [],
@@ -34,6 +34,7 @@ export const useChatStore = create((set, get) => ({
     }
   },
 
+  // taking chats 
   getMyChatPartners: async () => {
     set({ isUsersLoading: true });
     try {
@@ -46,6 +47,7 @@ export const useChatStore = create((set, get) => ({
     }
   },
 
+  // get messaages 
   getMessagesByUserId: async (userId) => {
     set({ isMessagesLoading: true });
     try {

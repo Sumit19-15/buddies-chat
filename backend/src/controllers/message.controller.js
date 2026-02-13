@@ -1,6 +1,8 @@
 import cloudinary from "../lib/cloudinary.js";
+import { getReceiverSocketId } from "../lib/socket.js";
 import Message from "../models/Message.js";
 import User from "../models/User.js";
+import { io } from "../lib/socket.js";
 
 // /messages/contacts
 export const getAllContacts = async (req, res) => {
@@ -92,7 +94,7 @@ export const sendMessage = async (req, res) => {
 // /message/chats
 export const getChatPartners = async (req, res) => {
   try {
-    const loggedInUserId = req.body._id;
+    const loggedInUserId = req.user._id;
 
     // finding all messages where the logged in user is either sender or receiver
     const messages = await Message.find({

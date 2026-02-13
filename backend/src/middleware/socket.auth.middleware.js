@@ -22,7 +22,7 @@ export const socketAuthMiddleware = async (socket, next) => {
     }
 
     // find user in db
-    const user = User.findById(decoded.userId).select("-password");
+    const user = await User.findById(decoded.userId).select("-password");
     if (!user) {
       console.log("Socket connection rejected: User not found");
       return next(new Error("User not found"));
@@ -37,7 +37,7 @@ export const socketAuthMiddleware = async (socket, next) => {
     );
     next();
   } catch (error) {
-    console.log("Error in socket authentication:", error.message);
+    console.log("Error in socket authentication middleware:", error.message);
     next(new Error("Unauthorized - Authentication failed"));
   }
 };
