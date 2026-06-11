@@ -34,6 +34,14 @@ app.use("/api/messages", messageRoutes);
 //   });
 // }
 
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "Backend is running",
+  });
+});
+
+
 server.listen(PORT, () => {
   console.log(`Listening on the Port ${PORT}`);
   connectDB();
