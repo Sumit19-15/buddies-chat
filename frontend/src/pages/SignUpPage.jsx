@@ -82,7 +82,7 @@ function SignUpPage() {
                         }
                         className="input"
                         placeholder="abc@mail.com"
-                        id="signupEmial"
+                        id="signupEmail"
                       />
                     </div>
                   </div>

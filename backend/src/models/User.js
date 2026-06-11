@@ -25,7 +25,7 @@ const userSchema = new Schema(
     },
   },
   {
-    timestamps: true, // createdAt and Updatedat store which is useful
+    timestamps: true,
   },
 );
 

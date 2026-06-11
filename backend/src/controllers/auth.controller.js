@@ -1,5 +1,5 @@
 import User from "../models/User.js";
-import { genrateToken } from "../lib/utils.js";
+import { generateToken } from "../lib/utils.js";
 import { sendWelcomeEmail } from "../emails/emailHandlers.js";
 import "dotenv/config";
 import { ENV } from "../lib/env.js";
@@ -21,7 +21,7 @@ export const signup = async (req, res) => {
         .json({ message: "Password must be at least 6 characters" });
     }
 
-    // check if emailis valid: regex
+    // check if email valid: regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({ message: "Invalid email format" });
@@ -44,9 +44,9 @@ export const signup = async (req, res) => {
 
     // authentication of new user
     if (newUser) {
-      // first save then genrate token
+      // first save then  token
       const savedUser = await newUser.save();
-      genrateToken(savedUser._id, res);
+      generateToken(savedUser._id, res);
 
       res.status(201).json({
         _id: newUser._id,
@@ -92,7 +92,7 @@ export const login = async (req, res) => {
     }
 
     console.log("User login with id :", user._id);
-    genrateToken(user._id, res);
+    generateToken(user._id, res);
 
     res.status(200).json({
       _id: user._id,

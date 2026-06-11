@@ -10,7 +10,7 @@ const BASE_URL =
 
 export const useAuthStore = create((set, get) => ({
   authUser: null, // login user data store here
-  isCheckingAuth: true, // checking that authenticaiton checking is on or not
+  isCheckingAuth: true, // checking that authentication checking is on or not
   isSigningUp: false,
   isLoggingIn: false,
   socket: null,
