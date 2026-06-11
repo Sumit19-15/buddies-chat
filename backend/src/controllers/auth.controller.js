@@ -6,12 +6,13 @@ import { ENV } from "../lib/env.js";
 import cloudinary from "../lib/cloudinary.js";
 import bcrypt from "bcryptjs";
 
+// register new user and generate token
 export const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
 
   try {
     if (!fullName || !email || !password) {
-      return res.status(400).json({ message: "All fileds are required" });
+      return res.status(400).json({ message: "All fields are required" });
     }
 
     // checking password length
@@ -74,6 +75,7 @@ export const signup = async (req, res) => {
   }
 };
 
+// login user and generate token
 export const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -106,11 +108,20 @@ export const login = async (req, res) => {
   }
 };
 
+// logout user by clearing the cookie
 export const logout = async (_, res) => {
-  res.cookie("jwt", "", { maxAge: 0 });
-  res.status(200).json({ message: "Logout successfully" });
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+  });
+
+  res.status(200).json({
+    message: "Logout successfully",
+  });
 };
 
+// update user profile picture
 export const updateProfile = async (req, res) => {
   try {
     const { profilePic } = req.body;
